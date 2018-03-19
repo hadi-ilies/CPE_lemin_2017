@@ -10,7 +10,7 @@
 
 #include "room.h"
 
-typedef struct game_s {
+typedef struct {
 	size_t nb_ant;
 	room_t *start;
 	room_t *end;
