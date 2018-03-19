@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+find . -name '#*#' -delete
+find . -name '*~' -delete
+find . -name '*.o' -delete
+find . -name '*.gcda' -delete
+find . -name '*.gcno' -delete
+find . -name '*.gcno' -delete
+find . -name 'vgcore.*' -delete

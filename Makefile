@@ -5,29 +5,37 @@
 ## Makefile
 ##
 
-NAME	=	a.out
+NAME	=	lem_in
 
 CC	=	gcc
 
 SRCDIR	=	src/
 LIBDIR	=	lib/
+GAMEDIR	=	$(SRCDIR)game/
 
 SRC	=	$(SRCDIR)main.c \
+		$(SRCDIR)lemin.c \
+		$(GAMEDIR)game_create.c \
 
 OBJ	=	$(SRC:.c=.o)
 
 CFLAGS	+=	-I./include
 CFLAGS	+=	-W -Wall -Wextra
 
+LDFLAGS	=	-L $(LIBDIR) -lmy
+
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-		$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
+		make re -C $(LIBDIR)
+		$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS)
 
 clean	:
+		make clean -C $(LIBDIR)
 		rm -f $(OBJ)
 
 fclean	:	clean
+		make fclean -C $(LIBDIR)
 		rm -f $(NAME)
 
 re	:	fclean all

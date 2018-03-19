@@ -10,10 +10,12 @@
 
 #include "room.h"
 
-typedef struct room_s {
+typedef struct game_s {
 	size_t start;
 	size_t end;
-	room_t room;
-} room_t;
+	room_t *room;
+} game_t;
+
+game_t game_create(void);
 
 #endif

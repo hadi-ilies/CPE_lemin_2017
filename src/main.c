@@ -1,15 +1,17 @@
 /*
 ** EPITECH PROJECT, 2017
-** for_norme
+** lemin
 ** File description:
 ** main.c
 */
 
 #include "prototype.h"
-#include "room.h"
 
-int main(int nb_arg, char **arg_tab)
+int main(void)
 {
-	// code
-	return (0);
+	game_t game = game_create();
+
+	if (game.room == NULL)
+		return (84);
+	return (lemin(&game));
 }

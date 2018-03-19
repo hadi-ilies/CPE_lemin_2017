@@ -8,6 +8,8 @@
 #ifndef PROTOTYPE_H_
 #define PROTOTYPE_H_
 
-// prototype
+#include "game.h"
+
+int lemin(game_t *game);
 
 #endif
