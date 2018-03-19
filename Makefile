@@ -15,7 +15,7 @@ GAMEDIR	=	$(SRCDIR)game/
 
 SRC	=	$(SRCDIR)main.c \
 		$(SRCDIR)lemin.c \
-		$(GAMEDIR)game_create.c \
+		$(GAMEDIR)game_create.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -28,15 +28,15 @@ LDFLAGS	=	-L $(LIBDIR) -lmy
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-		@make re -C $(LIBDIR)
-		$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS)
+		make re -C $(LIBDIR) --no-print-directory
+		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean	:
-		@make clean -C $(LIBDIR)
-		@rm -f $(OBJ)
+		rm -f $(OBJ)
+		make clean -C $(LIBDIR) --no-print-directory
 
 fclean	:	clean
-		@make fclean -C $(LIBDIR)
-		@rm -f $(NAME)
+		rm -f $(NAME)
+		make fclean -C $(LIBDIR) --no-print-directory
 
 re	:	fclean all
