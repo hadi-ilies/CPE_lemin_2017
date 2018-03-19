@@ -22,9 +22,9 @@ bool room_in_path(room_t *room, path_t *path)
 	return (false);
 }
 
-path_t *add_room_to_path(path_t *path, room_t *room)
+path_t *add_path(path_t *path, room_t *room)
 {
-	path_t *new_path = malloc(sizeof(path));
+	path_t *new_path = malloc(sizeof(path_t));
 
 	if (new_path == NULL)
 		return (NULL);
@@ -33,33 +33,47 @@ path_t *add_room_to_path(path_t *path, room_t *room)
 	return (new_path);
 }
 
-path_t *remove_room_to_path(path_t *path)
+path_t *remove_path(path_t *path)
 {
 	path_t *new_path = NULL;
 
 	if (path == NULL)
 		return (NULL);
 	new_path = path->next;
-	free(path);
+	//free(path);
 	return (new_path);
 }
 
-int get_shorter_path(game_t *game, room_t *room, path_t *path)
+path_t *get_shorter_path(game_t *game, room_t *room, path_t *path)
 {
+	path = add_path(path, room);
+	if (room == game->end)
+		return (path);
 	for (size_t i = 0; i < room->nb_next; i++) {
-		if (room_in_path(room, path))
+		if (room_in_path(room->next[i], path))
 			continue;
-		if (room->next[i] == game->end)
-			return (1);
-		get_shorter_path(game, room->next[i], path);
+		printf("%s : %s\n", room->name, room->next[i]->name);
+		path = get_shorter_path(game, room->next[i], path);
+		if (path->room == game->end)
+			return (path);
 	}
-	return (0);
+	path = remove_path(path);
+	return (path);
+}
+
+void aff_path(path_t *path)
+{
+	if (path == NULL)
+		return;
+	aff_path(path->next);
+	printf("plath : %s\n", path->room->name);
 }
 
 int lemin(game_t *game)
 {
 	path_t *path = NULL;
 
-	get_shorter_path(game, game->start, path);
+	path = get_shorter_path(game, game->start, path);
+	aff_path(path);
 	return (0);
 }
