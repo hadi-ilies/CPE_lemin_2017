@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2018
-** for_norme
+** lemin
 ** File description:
 ** my_strlen.c
 */

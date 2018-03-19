@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2017
-** for_norme
+** lemin
 ** File description:
 ** prototype.h
 */
