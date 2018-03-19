@@ -21,21 +21,22 @@ OBJ	=	$(SRC:.c=.o)
 
 CFLAGS	+=	-I./include
 CFLAGS	+=	-W -Wall -Wextra
+CFLAGS	+=	-g
 
 LDFLAGS	=	-L $(LIBDIR) -lmy
 
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-		make re -C $(LIBDIR)
+		@make re -C $(LIBDIR)
 		$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS)
 
 clean	:
-		make clean -C $(LIBDIR)
-		rm -f $(OBJ)
+		@make clean -C $(LIBDIR)
+		@rm -f $(OBJ)
 
 fclean	:	clean
-		make fclean -C $(LIBDIR)
-		rm -f $(NAME)
+		@make fclean -C $(LIBDIR)
+		@rm -f $(NAME)
 
 re	:	fclean all
