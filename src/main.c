@@ -10,8 +10,8 @@
 int main(void)
 {
 	game_t game = game_create();
-
+/*
 	if (game.room == NULL)
 		return (84);
-	return (lemin(&game));
+		return (lemin(&game))*/
 }

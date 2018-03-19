@@ -17,7 +17,7 @@
 size_t my_printf(const char *str, ...);
 size_t my_fprintf(int fd, const char *str, ...);
 ssize_t my_strlen(const char *str);
-int my_strncmp(const char *s1, const char *s2);
+int my_strncmp(const char *s1, const char *s2, int n);
 char *get_next_line(int fd);
 char **str_to_tab(char *command, char *sep);
 
