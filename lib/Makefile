@@ -10,6 +10,8 @@ NAME	=	libmy.a
 SRC	=	my_strlen.c \
 		my_printf.c \
 		my_fprintf.c \
+		my_strncmp.c \
+		get_next_line.c
 
 OBJ	=	$(SRC:.c=.o)
 
