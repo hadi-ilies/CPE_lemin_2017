@@ -12,8 +12,8 @@
 
 typedef struct game_s {
 	size_t nb_ant;
-	size_t start;
-	size_t end;
+	room_t *start;
+	room_t *end;
 	room_t *room;
 } game_t;
 

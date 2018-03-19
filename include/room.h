@@ -11,7 +11,7 @@
 #include <stddef.h>
 
 typedef struct room_s {
-	size_t id;
+	char *name;
 	int x;
 	int y;
 	size_t nb_next;
