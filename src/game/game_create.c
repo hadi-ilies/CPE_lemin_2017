@@ -10,22 +10,6 @@
 #include "game.h"
 #include "my.h"
 
-char **add_line(char **map, char *line)
-{
-	size_t i = 0;
-	char **new_map;
-
-	for (; map && map[i] != NULL; i++);
-	if ((new_map = malloc(sizeof(char *) * (i + 2))) == NULL)
-		return (NULL);
-	for (i = 0; map && map[i] != NULL; i++)
-		new_map[i] = map[i];
-	new_map[i] = line;
-	new_map[i + 1] = NULL;
-	free(map);
-	return (new_map);
-}
-
 char *supr_comment(char *str)
 {
 	if (str == NULL)
@@ -75,10 +59,8 @@ void take_rooms(game_t *game, char **file, int i) // if i re"use" this function
 bool take_info(game_t *game, char **file) // i must do parsing
 {
 	game->nb_ant = atoi(file[0]);
-	for (int i = 0; file[i] != NULL; i++) {
+	for (int i = 0; file[i] != NULL; i++)
 		take_rooms(game, file, i);
-		//take_tunnels
-	}
 	return (false);
 }
 
@@ -94,17 +76,31 @@ int count_rooms(char **file)
 	return (j);
 }
 
-bool parsing(char **file) // i must update this function
+bool count_bar(char *link)
 {
-	int start = 0;
-	int end = 0;
+	size_t nb_bar = 0;
 
-	for (int i = 0; file[i] != NULL; i++) {
-		my_strncmp(file[i], START, my_strlen(START)) == 0 ? start++ : 0;
-		my_strncmp(file[i], END, my_strlen(END)) == 0 ? end++ : 0;
-	} if (start != 1 || end != 1)
+	for (int i = 0; link[i] != '\0'; i++)
+		(link[i] == '-') ? nb_bar++ : 0;
+	if (nb_bar == 1)
+		return (true);
+	else
 		return (false);
-	return (true);
+}
+
+void take_link(game_t *game, char **file)
+{
+	char **line;
+	char **link;
+
+	for (int i = 0; file[i]; i++) {
+		for (size_t j = 0; j < game->nb_room; j++) {
+			line = str_to_tab(file[i], " ");
+			if (line[1] == NULL && count_bar(line[0]) == true) {
+				link = str_to_tab(link[0], "-");
+			}
+		}
+	}
 }
 
 game_t game_create(void)
@@ -119,6 +115,9 @@ game_t game_create(void)
 	if (parsing(file) == false)
 		return (game);
 	take_info(&game, file);
+	if (parsing2(&game) == false)
+		return (game);
+	//take_link(&game, file);
 	printf("sname :%s|sx : %d|sy : %d\n", game.start->name, game.start->x, game.start->y);//tmp
 	printf("ename :%s|ex : %d|ey : %d\n", game.end->name, game.end->x, game.end->y);//tmp
 	for (int j = 0; j < count_rooms(file); j++)//tmp

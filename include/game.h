@@ -23,6 +23,9 @@ typedef struct {
 } game_t;
 
 game_t game_create(void);
+bool check_name_and_coord(game_t *game, size_t j);
+bool parsing(char **file);
+bool parsing2(game_t *game);
 void game_destroy(game_t *game);
 bool game_error(game_t *game);
 
