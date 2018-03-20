@@ -64,9 +64,9 @@ void take_rooms(game_t *game, char **file, int i) // if i re"use" this function
 		game->room[game->nb_room].name = room[0];
 		game->room[game->nb_room].x = atoi(room[1]);
 		game->room[game->nb_room].y = atoi(room[2]);
-		if (my_strcmp(file[i - 1], "##start") == 0)
+		if (my_strncmp(file[i - 1], START, my_strlen(START)) == 0)
 			game->start = &game->room[game->nb_room];
-		else if (my_strcmp(file[i - 1], "##end") == 0)
+		else if (my_strncmp(file[i - 1], END, my_strlen(END)) == 0)
 			game->end = &game->room[game->nb_room];
 		game->nb_room++;
 	}
@@ -94,6 +94,19 @@ int count_rooms(char **file)
 	return (j);
 }
 
+bool parsing(char **file) // i must update this function
+{
+	int start = 0;
+	int end = 0;
+
+	for (int i = 0; file[i] != NULL; i++) {
+		my_strncmp(file[i], START, my_strlen(START)) == 0 ? start++ : 0;
+		my_strncmp(file[i], END, my_strlen(END)) == 0 ? end++ : 0;
+	} if (start != 1 || end != 1)
+		return (false);
+	return (true);
+}
+
 game_t game_create(void)
 {
 	game_t game = {.nb_room = 0};
@@ -102,6 +115,8 @@ game_t game_create(void)
 	if (file == NULL)
 		return (game);
 	if ((game.room = malloc(sizeof(room_t) * count_rooms(file))) == NULL)
+		return (game);
+	if (parsing(file) == false)
 		return (game);
 	take_info(&game, file);
 	printf("sname :%s|sx : %d|sy : %d\n", game.start->name, game.start->x, game.start->y);//tmp
