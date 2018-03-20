@@ -7,7 +7,7 @@
 
 #include "prototype.h"
 
-int main(int nb)
+int main(void)
 {
 	game_t game = game_create();
 
