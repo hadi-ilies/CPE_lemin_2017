@@ -13,7 +13,6 @@ SRC	=	my_strlen.c \
 		my_strncmp.c \
 		get_next_line.c \
 		str_to_tab.c \
-		mem_alloc_2d_array.c
 
 OBJ	=	$(SRC:.c=.o)
 

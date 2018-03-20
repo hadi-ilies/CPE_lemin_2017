@@ -40,7 +40,7 @@ path_t *remove_path(path_t *path)
 	if (path == NULL)
 		return (NULL);
 	new_path = path->next;
-	//free(path);
+	free(path);
 	return (new_path);
 }
 
@@ -69,11 +69,20 @@ void aff_path(path_t *path)
 	printf("plath : %s\n", path->room->name);
 }
 
+void path_destroy(path_t *path)
+{
+	if (path == NULL)
+		return;
+	path_destroy(path->next);
+	free(path);
+}
+
 int lemin(game_t *game)
 {
 	path_t *path = NULL;
 
 	path = get_shorter_path(game, game->start, path);
 	aff_path(path);
+	path_destroy(path);
 	return (0);
 }

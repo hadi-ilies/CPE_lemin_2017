@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2018
-** minishell
+** lemin
 ** File description:
 ** get_words.c
 */
