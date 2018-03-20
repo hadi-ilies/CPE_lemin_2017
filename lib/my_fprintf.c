@@ -7,6 +7,7 @@
 
 #include <stdarg.h>
 #include <unistd.h>
+#include "my.h"
 
 size_t my_putchar(int fd, const char c)
 {
