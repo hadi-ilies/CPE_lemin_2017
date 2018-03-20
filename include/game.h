@@ -14,9 +14,11 @@ typedef struct {
 	size_t nb_ant;
 	room_t *start;
 	room_t *end;
+	size_t nb_room;
 	room_t *room;
 } game_t;
 
 game_t game_create(void);
+void game_destroy(game_t *game);
 
 #endif
