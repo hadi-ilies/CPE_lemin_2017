@@ -9,7 +9,7 @@
 #include "game.h"
 #include "my.h"
 
-char **my_realloc_2d(char **map, char *line)
+char **add_line(char **map, char *line)
 {
 	size_t i = 0;
 	char **new_map;
@@ -31,7 +31,7 @@ char **save_file()
 	char **file = NULL;
 
 	for (int i = 0; str != NULL; i++) {
-		file = my_realloc_2d(file, str);
+		file = add_line(file, str);
 		str = get_next_line(0);
 	}
 		return (file);
@@ -102,7 +102,7 @@ game_t game_create(void)
 	game_t game;
 	char **file = save_file();
 
-	game.start = malloc(sizeof(room_t));//why pointer
+	game.start = malloc(sizeof(room_t));
 	game.end = malloc(sizeof(room_t));
 	game.room = malloc(sizeof(room_t) * count_rooms(file));
 	take_info(&game, file);
