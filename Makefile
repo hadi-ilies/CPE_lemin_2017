@@ -20,6 +20,7 @@ SRC	=	$(SRCDIR)main.c \
 		$(GAMEDIR)game_destroy.c \
 		$(GAMEDIR)game_error.c \
 		$(ROOMDIR)room_destroy.c \
+		$(ROOMDIR)room_error.c \
 
 OBJ	=	$(SRC:.c=.o)
 

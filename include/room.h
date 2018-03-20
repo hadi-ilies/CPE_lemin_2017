@@ -8,6 +8,7 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
+#include <stdbool.h>
 #include <stddef.h>
 
 typedef struct room_s {
@@ -19,5 +20,6 @@ typedef struct room_s {
 } room_t;
 
 void room_destroy(room_t *room);
+bool room_error(room_t *room);
 
 #endif
