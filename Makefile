@@ -12,10 +12,14 @@ CC	=	gcc
 SRCDIR	=	src/
 LIBDIR	=	lib/
 GAMEDIR	=	$(SRCDIR)game/
+ROOMDIR	=	$(SRCDIR)room/
 
 SRC	=	$(SRCDIR)main.c \
 		$(SRCDIR)lemin.c \
-		$(GAMEDIR)game_create.c
+		$(GAMEDIR)game_create.c \
+		$(GAMEDIR)game_destroy.c \
+		$(GAMEDIR)game_error.c \
+		$(ROOMDIR)room_destroy.c \
 
 OBJ	=	$(SRC:.c=.o)
 

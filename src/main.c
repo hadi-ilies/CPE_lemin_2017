@@ -11,7 +11,9 @@ int main(void)
 {
 	game_t game = game_create();
 
-	if (game.nb_room < 2 || game.start == NULL || game.end == NULL || game.room == NULL)
+	if (game_error(&game))
 		return (84);
-	return (lemin(&game));
+	lemin(&game);
+	game_destroy(&game);
+	return (0);
 }

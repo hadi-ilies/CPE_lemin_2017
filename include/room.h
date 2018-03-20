@@ -18,4 +18,6 @@ typedef struct room_s {
 	struct room_s **next;
 } room_t;
 
+void room_destroy(room_t *room);
+
 #endif
