@@ -1,0 +1,11 @@
+/*
+** EPITECH PROJECT, 2018
+** lemin
+** File description:
+** my_strcmp.c
+*/
+
+int my_strcmp(const char *a, const char *b)
+{
+	return (*a != *b || *a == '\0' ? *a - *b : my_strcmp(a + 1, b + 1));
+}

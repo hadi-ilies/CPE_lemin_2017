@@ -10,6 +10,7 @@ NAME	=	libmy.a
 SRC	=	my_strlen.c \
 		my_printf.c \
 		my_fprintf.c \
+		my_strcmp.c \
 		my_strncmp.c \
 		get_next_line.c \
 		str_to_tab.c \
