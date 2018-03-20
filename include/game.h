@@ -11,6 +11,9 @@
 #include <stdbool.h>
 #include "room.h"
 
+#define START "##start"
+#define END "##end"
+
 typedef struct {
 	size_t nb_ant;
 	room_t *start;
