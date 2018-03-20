@@ -88,19 +88,35 @@ bool count_bar(char *link)
 		return (false);
 }
 
-void take_link(game_t *game, char **file)
+bool check_room_exist(game_t *game, char **link)
+{
+	int exist1 = 0;
+	int exist2 = 0;
+
+	for (size_t i = 0; i < game->nb_room; i++) {
+		if (my_strncmp(link[0], game->room[i].name, my_strlen(game->room[i].name)) == 0)
+			exist1 = 1;
+		if (my_strncmp(link[1], game->room[i].name, my_strlen(game->room[i].name)) == 0)
+			exist2 = 1;
+	} if (exist1 == 0 || exist2 == 0)
+		return (false);
+	return (true);
+}
+
+bool take_link(game_t *game, char **file)
 {
 	char **line;
 	char **link;
 
 	for (int i = 0; file[i]; i++) {
-		for (size_t j = 0; j < game->nb_room; j++) {
-			line = str_to_tab(file[i], " ");
-			if (line[1] == NULL && count_bar(line[0]) == true) {
-				link = str_to_tab(link[0], "-");
-			}
+		line = str_to_tab(file[i], " ");
+		if (line [0] != NULL && line[1] == NULL && count_bar(line[0]) == true) {
+			link = str_to_tab(line[0], "-");
+			if (check_room_exist(game, link) == false)
+				return (false);
 		}
 	}
+	return (true);
 }
 
 game_t game_create(void)
@@ -117,7 +133,8 @@ game_t game_create(void)
 	take_info(&game, file);
 	if (parsing2(&game) == false)
 		return (game);
-	//take_link(&game, file);
+	if (take_link(&game, file) == false)
+		return (game);
 	printf("sname :%s|sx : %d|sy : %d\n", game.start->name, game.start->x, game.start->y);//tmp
 	printf("ename :%s|ex : %d|ey : %d\n", game.end->name, game.end->x, game.end->y);//tmp
 	for (int j = 0; j < count_rooms(file); j++)//tmp
