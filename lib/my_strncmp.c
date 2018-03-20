@@ -1,16 +1,16 @@
 /*
 ** EPITECH PROJECT, 2018
-** strncmp
+** lemin
 ** File description:
-** strncmp
+** my_strncmp.c
 */
 
-int my_strncmp(const char *s1, const char *s2, int n)
+int my_strncmp(const char *s1, const char *s2, size_t n)
 {
-	for (int k = 0; k < n; k++) {
-		if (s1[k] != s2[k])
-			return (-1);
-		if (s1[k] == '\0')
+	for (size_t i = 0; i < n; i++) {
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		if (s1[i] == '\0')
 			return (0);
 	}
 	return (0);
