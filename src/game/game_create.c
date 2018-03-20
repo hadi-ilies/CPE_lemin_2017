@@ -5,6 +5,7 @@
 ** game.c
 */
 
+#include <stdio.h> // tmp
 #include "stdbool.h"
 #include "game.h"
 #include "my.h"
@@ -25,7 +26,7 @@ char **add_line(char **map, char *line)
 	return (new_map);
 }
 
-char **save_file()
+char **save_file(void)
 {
 	char *str = get_next_line(0);
 	char **file = NULL;
@@ -34,24 +35,23 @@ char **save_file()
 		file = add_line(file, str);
 		str = get_next_line(0);
 	}
-		return (file);
+	return (file);
 }
 
 void take_rooms(game_t *game, char **file, int i) // if i re"use" this function
 {
 	char **room;
-	static int j = 0;
 
 	room = str_to_tab(file[i], " ");
 	if (room[0] != NULL && room[1] != NULL && room[2] != NULL) {
-		game->room[j].name = room[0];
-		game->room[j].x = atoi(room[1]);
-		game->room[j].y = atoi(room[2]);
-		if (my_strncmp(file[i - 1], "##start", 8) == 0)
-			game->start = &game->room[j];
-		if (my_strncmp(file[i - 1], "##end", 6) == 0)
-			game->end = &game->room[j];
-		j++;
+		game->room[game->nb_room].name = room[0];
+		game->room[game->nb_room].x = atoi(room[1]);
+		game->room[game->nb_room].y = atoi(room[2]);
+		if (my_strcmp(file[i - 1], "##start") == 0)
+			game->start = &game->room[game->nb_room];
+		else if (my_strcmp(file[i - 1], "##end") == 0)
+			game->end = &game->room[game->nb_room];
+		game->nb_room++;
 	}
 }
 
@@ -61,6 +61,7 @@ bool take_info(game_t *game, char **file) // i must do parsing
 	for (int i = 0; file[i] != NULL; i++) {
 		take_rooms(game, file, i);
 	}
+	return (false);
 }
 
 int count_rooms(char **file)
@@ -77,10 +78,11 @@ int count_rooms(char **file)
 
 game_t game_create(void)
 {
-	game_t game;
+	game_t game = {.nb_room = 0};
 	char **file = save_file();
 
-	game.room = malloc(sizeof(room_t) * count_rooms(file));
+	if ((game.room = malloc(sizeof(room_t) * count_rooms(file))) == NULL)
+		return (game);
 	take_info(&game, file);
 	printf("sname :%s|sx : %d|sy : %d\n", game.start->name, game.start->x, game.start->y);//tmp
 	printf("ename :%s|ex : %d|ey : %d\n", game.end->name, game.end->x, game.end->y);//tmp
