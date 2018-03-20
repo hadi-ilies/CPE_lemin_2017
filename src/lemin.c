@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include "game.h"
 #include "path.h"
+#include "my.h" //tmp
 
 bool room_in_path(room_t *room, path_t *path)
 {
@@ -52,7 +53,7 @@ path_t *get_shorter_path(game_t *game, room_t *room, path_t *path)
 	for (size_t i = 0; i < room->nb_next; i++) {
 		if (room_in_path(room->next[i], path))
 			continue;
-		printf("%s : %s\n", room->name, room->next[i]->name);
+		my_printf("%s : %s\n", room->name, room->next[i]->name);
 		path = get_shorter_path(game, room->next[i], path);
 		if (path->room == game->end)
 			return (path);
@@ -66,7 +67,7 @@ void aff_path(path_t *path)
 	if (path == NULL)
 		return;
 	aff_path(path->next);
-	printf("plath : %s\n", path->room->name);
+	my_printf("plath : %s\n", path->room->name);
 }
 
 void path_destroy(path_t *path)
