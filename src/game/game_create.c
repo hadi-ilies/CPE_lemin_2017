@@ -26,15 +26,32 @@ char **add_line(char **map, char *line)
 	return (new_map);
 }
 
+char *supr_comment(char *str)
+{
+	if (str == NULL)
+		return (NULL);
+	for (int i = 0; str[i] != '\0'; i++)
+		if (str[i] == '#' && str[i + 1] == '#')
+			i++;
+		else if (str[i] == '#' && str[i + 1] != '#') {
+			str[i] = '\0';
+			return (str);
+		}
+	return (str);
+}
+
 char **save_file(void)
 {
-	char *str = get_next_line(0);
+	char *str = NULL;
 	char **file = NULL;
 
-	for (int i = 0; str != NULL; i++) {
-		file = add_line(file, str);
+	do {
 		str = get_next_line(0);
-	}
+		if (str == NULL)
+			return (file);
+		str = supr_comment(str);
+		file = add_line(file, str);
+	} while (str != NULL);
 	return (file);
 }
 
@@ -60,6 +77,7 @@ bool take_info(game_t *game, char **file) // i must do parsing
 	game->nb_ant = atoi(file[0]);
 	for (int i = 0; file[i] != NULL; i++) {
 		take_rooms(game, file, i);
+		//take_tunnels
 	}
 	return (false);
 }
@@ -81,6 +99,8 @@ game_t game_create(void)
 	game_t game = {.nb_room = 0};
 	char **file = save_file();
 
+	if (file == NULL)
+		return (game);
 	if ((game.room = malloc(sizeof(room_t) * count_rooms(file))) == NULL)
 		return (game);
 	take_info(&game, file);
