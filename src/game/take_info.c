@@ -9,12 +9,25 @@
 #include "game.h"
 #include "my.h"
 
-void take_rooms(game_t *game, char **file, int i)
+bool check_x_y(char *c_x, char *c_y)
+{
+	for (int i = 0; c_x[i] != '\0'; i++)
+		if (c_x[i] < '0' || c_x[i] > '9')
+			return (false);
+	for (int j = 0; c_y[j] != '\0'; j++)
+		if (c_y[j] < '0' || c_y[j] > '9')
+			return (false);
+	return (true);
+}
+
+bool take_rooms(game_t *game, char **file, int i)
 {
 	char **room;
 
-	room = str_to_tab(file[i], " ");
+	room = str_to_tab(file[i], " \t");
 	if (room[0] != NULL && room[1] != NULL && room[2] != NULL) {
+		if (check_x_y(room[1], room[2]) == false)
+			return (false);
 		game->room[game->nb_room].name = room[0];
 		game->room[game->nb_room].x = atoi(room[1]);
 		game->room[game->nb_room].y = atoi(room[2]);
@@ -28,14 +41,16 @@ void take_rooms(game_t *game, char **file, int i)
 	for (int j = 1; room[j] != NULL; j++)
 		free(room[j]);
 	free(room);
+	return (true);
 }
 
 bool take_info(game_t *game, char **file)
 {
 	game->nb_ant = atoi(file[0]);
 	for (int i = 0; file[i] != NULL; i++)
-		take_rooms(game, file, i);
-	return (false);
+		if (take_rooms(game, file, i) == false)
+			return (false);
+	return (true);
 }
 
 int count_rooms(char **file)
@@ -44,7 +59,7 @@ int count_rooms(char **file)
 	char **room;
 
 	for (int i = 0; file[i] != NULL; i++) {
-		room = str_to_tab(file[i], " ");
+		room = str_to_tab(file[i], " \t");
 		room[0] != NULL && room[1] != NULL && room[2] != NULL ? j++ : 0;
 		for (int j = 0; room[j] != NULL; j++)
 			free(room[j]);

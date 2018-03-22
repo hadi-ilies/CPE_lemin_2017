@@ -38,9 +38,8 @@ game_t game_create(void)
 		return (GAME_ERROR);
 	if ((game.room = malloc(sizeof(room_t) * count_rooms(file))) == NULL)
 		return (GAME_ERROR);
-	if (parsing(file) == false)
+	if (parsing(file) == false || take_info(&game, file) == false)
 		return (GAME_ERROR);
-	take_info(&game, file);
 	if (parsing2(&game) == false)
 		return (GAME_ERROR);
 	if (parsing3(&game, file) == false)

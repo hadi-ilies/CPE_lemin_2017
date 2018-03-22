@@ -32,8 +32,10 @@ char **save_file(void)
 		str = get_next_line(0);
 		if (str == NULL)
 			return (file);
-		if (my_strncmp(str, "##", 2) == 0 && my_strcmp(str + 2, "start") != 0
-		&& my_strcmp(str + 2, "end") != 0)
+		if ((str[0] == '#' && str[1] != '#') || (
+		my_strncmp(str, "##", 2) == 0
+		&& my_strcmp(str + 2, "start") != 0
+		&& my_strcmp(str + 2, "end") != 0))
 			str = get_next_line(0);
 		str = supr_comment(str);
 		file = add_line(file, str);
@@ -50,7 +52,7 @@ void display_file(char **file)
 	my_printf("%s\n", file[0]);
 	my_printf("#rooms\n");
 	for (int i = 1; file[i] != NULL; i++) {
-		tmp = str_to_tab(file[i], " ");
+		tmp = str_to_tab(file[i], " \t");
 		if (tmp[0] != NULL && tmp[1] == NULL
 		&& count_bar(tmp[0]) == true && bol == 1) {
 			my_printf("#tunnels\n");

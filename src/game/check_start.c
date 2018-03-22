@@ -15,7 +15,7 @@ bool check_start(char **file)
 
 	for (int i = 0; file[i] != NULL; i++) {
 		if (my_strncmp(file[i], START, my_strlen(START)) == 0) {
-			check_start = str_to_tab(file[i + 1], " ");
+			check_start = str_to_tab(file[i + 1], " \t");
 			if (check_start[0] != NULL && check_start[1] != NULL
 			&& check_start[2] != NULL)
 				return (true);
@@ -32,7 +32,7 @@ bool check_end(char **file)
 
 	for (int i = 0; file[i] != NULL; i++) {
 		if (my_strncmp(file[i], END, my_strlen(END)) == 0) {
-			check_end = str_to_tab(file[i + 1], " ");
+			check_end = str_to_tab(file[i + 1], " \t");
 			if (check_end[0] != NULL && check_end[1] != NULL
 			&& check_end[2] != NULL)
 				return (true);

@@ -43,7 +43,7 @@ void make_link(game_t *game, char **file)
 	char **link;
 
 	for (int i = 0; file[i]; i++) {
-		line = str_to_tab(file[i], " ");
+		line = str_to_tab(file[i], " \t");
 		if (line [0] != NULL && line[1] == NULL && count_bar(line[0]) == true) {
 			link = str_to_tab(line[0], "-");
 			linked_room(&game->room[find_room(game, link[0])],

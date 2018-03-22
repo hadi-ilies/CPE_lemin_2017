@@ -28,7 +28,7 @@ bool check_start(char **file);
 void display_file(char **file);
 void free_file(char **file);
 bool check_ants(char *nb_ants);
-void take_rooms(game_t *game, char **file, int i);
+bool take_rooms(game_t *game, char **file, int i);
 bool take_info(game_t *game, char **file);
 int count_rooms(char **file);
 char *supr_comment(char *str);
