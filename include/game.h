@@ -13,6 +13,7 @@
 
 #define START "##start"
 #define END "##end"
+#define GAME_ERROR (game_t){.nb_ant = 0}
 
 typedef struct {
 	size_t nb_ant;
@@ -22,7 +23,26 @@ typedef struct {
 	room_t *room;
 } game_t;
 
+bool check_end(char **file);
+bool check_start(char **file);
+void display_file(char **file);
+void free_file(char **file);
+bool check_ants(char *nb_ants);
+void take_rooms(game_t *game, char **file, int i);
+bool take_info(game_t *game, char **file);
+int count_rooms(char **file);
+char *supr_comment(char *str);
+char **save_file(void);
+bool count_bar(char *link);
+bool parsing3(game_t *game, char **file);
+bool parsing2(game_t *game);
+bool parsing(char **file);
+bool check_name_and_coord(game_t *game, size_t j);
+bool check_room_exist(game_t *game, char **link);
 game_t game_create(void);
+int find_room(game_t *game, char *room);
+void linked_room(room_t *room1, room_t *room2);
+void make_link(game_t *game, char **file);
 bool check_name_and_coord(game_t *game, size_t j);
 bool parsing(char **file);
 bool parsing2(game_t *game);

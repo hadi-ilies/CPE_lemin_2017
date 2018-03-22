@@ -5,76 +5,9 @@
 ** game.c
 */
 
-#include <stdio.h> // tmp
-#include "stdbool.h"
+#include <stdbool.h>
 #include "game.h"
 #include "my.h"
-
-char *supr_comment(char *str)
-{
-	if (str == NULL)
-		return (NULL);
-	for (int i = 0; str[i] != '\0'; i++)
-		if (str[i] == '#' && str[i + 1] == '#')
-			i++;
-		else if (str[i] == '#' && str[i + 1] != '#') {
-			str[i] = '\0';
-			return (str);
-		}
-	return (str);
-}
-
-char **save_file(void)
-{
-	char *str = NULL;
-	char **file = NULL;
-
-	do {
-		str = get_next_line(0);
-		if (str == NULL)
-			return (file);
-		str = supr_comment(str);
-		file = add_line(file, str);
-	} while (str != NULL);
-	return (file);
-}
-
-void take_rooms(game_t *game, char **file, int i) // if i re"use" this function
-{
-	char **room;
-
-	room = str_to_tab(file[i], " ");
-	if (room[0] != NULL && room[1] != NULL && room[2] != NULL) {
-		game->room[game->nb_room].name = room[0];
-		game->room[game->nb_room].x = atoi(room[1]);
-		game->room[game->nb_room].y = atoi(room[2]);
-		if (my_strncmp(file[i - 1], START, my_strlen(START)) == 0)
-			game->start = &game->room[game->nb_room];
-		else if (my_strncmp(file[i - 1], END, my_strlen(END)) == 0)
-			game->end = &game->room[game->nb_room];
-		game->nb_room++;
-	}
-}
-
-bool take_info(game_t *game, char **file) // i must do parsing
-{
-	game->nb_ant = atoi(file[0]);
-	for (int i = 0; file[i] != NULL; i++)
-		take_rooms(game, file, i);
-	return (false);
-}
-
-int count_rooms(char **file)
-{
-	int j = 0;
-	char **room;
-
-	for (int i = 0; file[i] != NULL; i++) {
-		room = str_to_tab(file[i], " ");
-		room[0] != NULL && room[1] != NULL && room[2] != NULL ? j++ : 0;
-	}
-	return (j);
-}
 
 bool count_bar(char *link)
 {
@@ -88,103 +21,11 @@ bool count_bar(char *link)
 		return (false);
 }
 
-bool check_room_exist(game_t *game, char **link)
-{
-	int exist1 = 0;
-	int exist2 = 0;
-
-	for (size_t i = 0; i < game->nb_room; i++) {
-		if (my_strncmp(link[0], game->room[i].name, my_strlen(game->room[i].name)) == 0)
-			exist1 = 1;
-		if (my_strncmp(link[1], game->room[i].name, my_strlen(game->room[i].name)) == 0)
-			exist2 = 1;
-	} if (exist1 == 0 || exist2 == 0)
-		return (false);
-	return (true);
-}
-
-bool parsing3(game_t *game, char **file)
-{
-	char **line;
-	char **link;
-
-	for (int i = 0; file[i]; i++) {
-		line = str_to_tab(file[i], " ");
-		if (line [0] != NULL && line[1] == NULL && count_bar(line[0]) == true) {
-			link = str_to_tab(line[0], "-");
-			if (my_strcmp(link[0], link[1]) == 0)
-				return (false);
-			if (check_room_exist(game, link) == false)
-				return (false);
-		}
-	}
-	return (true);
-}
-/*
-int count_malloc_next(room_t *room, char **file)
-{
-	char **line;
-	char **link;
-	int next = 0;
-
-	for (int i = 0; file[i]; i++) {
-		line = str_to_tab(file[i], " ");
-		if (line [0] != NULL && line[1] == NULL && count_bar(line[0]) == true) {
-			link = str_to_tab(line[0], "-");
-			my_strcmp(room->name, link[0]) == 0 ? next++ : 0;
-			my_strcmp(room->name, link[1]) == 0 ? next++ : 0;
-		}
-	}
-		return (next);
-}
-*/
-
-void init_next(game_t *game, char **file)
+void init_next(game_t *game)
 {
 	for (size_t i = 0; i < game->nb_room; i++) {
 		game->room[i].nb_next = 0;
 		game->room[i].next = NULL;
-	}
-}
-int find_room(game_t *game, char *room)
-{
-	for (size_t i = 0; i < game->nb_room; i++)
-		if (my_strcmp(game->room[i].name, room) == 0) {
-			return (i);
-		}
-	return (0);
-}
-
-void linked_room(room_t *room1, room_t *room2)
-{
-	room_t **next1 = malloc(sizeof(room_t *) * (room1->nb_next + 1));
-	room_t **next2 = malloc(sizeof(room_t *) * (room2->nb_next + 1));
-
-	for (size_t i = 0; i < room1->nb_next; i++)
-		next1[i] = room1->next[i];
-	next1[room1->nb_next] = room2;
-	for (size_t i = 0; i < room2->nb_next; i++)
-		next2[i] = room2->next[i];
-	next2[room2->nb_next] = room1;
-	free(room1->next);
-	room1->next = next1;
-	free(room2->next);
-	room2->next = next2;
-	room1->nb_next += 1;
-	room2->nb_next += 1;
-}
-
-void make_link(game_t *game, char **file)
-{
-	char **line;
-	char **link;
-
-	for (int i = 0; file[i]; i++) {
-		line = str_to_tab(file[i], " ");
-		if (line [0] != NULL && line[1] == NULL && count_bar(line[0]) == true) {
-			link = str_to_tab(line[0], "-");
-	linked_room(&game->room[find_room(game, link[0])], &game->room[find_room(game, link[1])]);
-		}
 	}
 }
 
@@ -194,24 +35,19 @@ game_t game_create(void)
 	char **file = save_file();
 
 	if (file == NULL)
-		return (game);
+		return (GAME_ERROR);
 	if ((game.room = malloc(sizeof(room_t) * count_rooms(file))) == NULL)
-		return (game);
+		return (GAME_ERROR);
 	if (parsing(file) == false)
-		return (game);
+		return (GAME_ERROR);
 	take_info(&game, file);
 	if (parsing2(&game) == false)
-		return (game);
+		return (GAME_ERROR);
 	if (parsing3(&game, file) == false)
-		return (game);
-	init_next(&game, file);
+		return (GAME_ERROR);
+	init_next(&game);
 	make_link(&game, file);
-	//printf("%d\n|next : %s\n", game.start->nb_next, game.room[5].next[1]->name);//tmp
-	//printf("sname :%s|sx : %d|sy : %d\n", game.start->name, game.start->x, game.start->y);//tmp
-	//printf("ename :%s|ex : %d|ey : %d\n", game.end->name, game.end->x, game.end->y);//tmp
-	//for (int j = 0; j < count_rooms(file); j++)//tmp
-	//printf("nb_room %d|name :%s|x : %d|y : %d\n", count_rooms(file), game.room[j].name, game.room[j].x, game.room[j].y);//tmp
-	for (int i = 0; file[i] != NULL; i++) //tmp
-		printf("%s\n", file[i]); //tmp
+	display_file(file);
+	free_file(file);
 	return (game);
 }

@@ -13,6 +13,8 @@ char **add_line(char **map, char *line)
 	size_t i = 0;
 	char **new_map;
 
+	if (line == NULL)
+		return (map);
 	for (; map && map[i] != NULL; i++);
 	if ((new_map = malloc(sizeof(char *) * (i + 2))) == NULL)
 		return (NULL);
