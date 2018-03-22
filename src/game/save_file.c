@@ -33,10 +33,8 @@ char **save_file(void)
 		if (str == NULL)
 			return (file);
 		if (my_strncmp(str, "##", 2) == 0 && my_strcmp(str + 2, "start") != 0
-		&& my_strcmp(str + 2, "end") != 0) {
-			printf("%s\n", str + 2);
+		&& my_strcmp(str + 2, "end") != 0)
 			str = get_next_line(0);
-		}
 		str = supr_comment(str);
 		file = add_line(file, str);
 	} while (str != NULL);
