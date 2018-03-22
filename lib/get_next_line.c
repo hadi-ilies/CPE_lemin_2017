@@ -9,64 +9,49 @@
 #include <stdlib.h>
 #include "my.h"
 
-void get_buffer(char *dest, char *buffer, int size, int len)
+char *my_realloc(char *buf, size_t size)
 {
-	if (buffer != 0)
-		for (int i = 0; buffer[i] != '\0' && i < len; i++)
-			dest[i] = buffer[i];
-	dest[len + size] = '\0';
-}
+	char *new_buf = malloc(sizeof(char) * size);
+	bool end = false;
 
-void insert_line(char *dest, char *buffer, int size)
-{
-	int i;
-
-	for (i = 0; buffer[i] != '\0' && i < size; i++)
-		dest[i] = buffer[i];
-}
-
-char *my_mem_memory(char *ptr, int size, int *begin, char *buffer)
-{
-	char *str;
-	int len = 0;
-
-	if (ptr != 0)
-		for (; ptr[len] != '\0'; len++);
-	str = malloc(sizeof(char) * (len + size + 1));
-	if (str == NULL)
+	if (new_buf == NULL)
 		return (NULL);
-	get_buffer(str, ptr, size, len);
-	insert_line(str + len, buffer + *begin, size);
-	if (ptr == 0)
-		free(ptr);
-	(*begin) += size + 1;
-	return (str);
+	for (size_t i = 0; i < size; i++) {
+		!end && buf[i] == '\0' ? end = true : 0;
+		!end ? new_buf[i] = buf[i] : 0;
+		end ? new_buf[i] = '\0' : 0;
+	}
+	free(buf);
+	return (new_buf);
 }
 
-char *get_next_line2(int fd)
+char *get_line_main(int fd)
 {
-	char *array = NULL;
-	int size = 0;
-	static int count = 0;
-	static int begin = 0;
-	static char buffer[(READ_SIZE < 0 ? 0 : READ_SIZE) + 1] = {0};
+	char *buf = malloc(sizeof(char) * 2);
 
-	for (; count != -1; size++) {
-		if (count <= begin) {
-			begin = 0;
-			size = 0;
-			if (!(count = read(fd, buffer, READ_SIZE)))
-				return (array);
-		} if (buffer[begin + size] == '\n') {
-			array = my_mem_memory(array, size, &begin, buffer);
-			return (array);
-		} if (begin + size == count - 1)
-			array = my_mem_memory(array, size + 1, &begin, buffer);
+	if (buf == NULL)
+		return (NULL);
+	for (size_t i = 0;; i++) {
+		if (read(fd, &buf[i], 1) < 1) {
+			free(buf);
+			return (NULL);
+		}
+		buf[i + 1] = '\0';
+		buf = my_realloc(buf, i + 3);
+		if (buf == NULL)
+			return (NULL);
+		if (buf[i] == '\n') {
+			buf[i] = '\0';
+			return (buf);
+		}
 	}
-	return (NULL);
 }
 
 char *get_next_line(int fd)
 {
-	return (READ_SIZE > 0 && fd >= 0 ? get_next_line2(fd) : NULL);
+	char *line = get_line_main(fd);
+
+	while (line && my_strlen(line) > 0 && line[my_strlen(line) - 1] == ' ')
+		line[my_strlen(line) - 1] = '\0';
+	return (line);
 }
