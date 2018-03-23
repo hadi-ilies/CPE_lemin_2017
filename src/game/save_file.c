@@ -23,6 +23,14 @@ char *supr_comment(char *str)
 	return (str);
 }
 
+bool check_urandom(char *str)
+{
+	for (int i = 0; str[i] != '\0'; i++)
+		if (str[i] < ' ' || str[i] > '~')
+			return (false);
+	return (true);
+}
+
 char **save_file(void)
 {
 	char *str = NULL;
@@ -30,7 +38,7 @@ char **save_file(void)
 
 	do {
 		str = get_next_line(0);
-		if (str == NULL)
+		if (str == NULL || check_urandom(str) == false)
 			return (file);
 		if ((str[0] == '#' && str[1] != '#') || (
 		my_strncmp(str, "##", 2) == 0
