@@ -24,6 +24,7 @@ bool count_bar(char *link)
 void init_next(game_t *game)
 {
 	for (size_t i = 0; i < game->nb_room; i++) {
+		game->room[i].var = 0;
 		game->room[i].nb_next = 0;
 		game->room[i].next = NULL;
 	}

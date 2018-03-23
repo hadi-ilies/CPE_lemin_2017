@@ -9,10 +9,29 @@
 #include "game.h"
 #include "my.h"
 
+bool there_is_links(char **file)
+{
+	char **link = NULL;
+	bool count_link = 0;
+
+	for (int i = 0; file[i] != NULL; i++) {
+		link = str_to_tab(file[i], " \t");
+		if (link[0] != NULL && link[1] == NULL
+		&& count_bar(link[0]) == true)
+			return (true);
+		for (int j = 0; link[j] != NULL; j++)
+			free(link[j]);
+		free(link);
+	}
+	return (false);
+}
+
 bool check_start(char **file)
 {
 	char **check_start = NULL;
 
+	if (there_is_links(file) == false)
+		return (false);
 	for (int i = 0; file[i] != NULL; i++) {
 		if (my_strncmp(file[i], START, my_strlen(START)) == 0) {
 			check_start = str_to_tab(file[i + 1], " \t");

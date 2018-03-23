@@ -10,8 +10,13 @@
 
 bool check_ants(char *nb_ants)
 {
-	for (int i = 0; nb_ants[i] != '\0'; i++)
-		if (nb_ants[i] < '0' || nb_ants[i] > '9')
+	char **ants = NULL;
+
+	ants = str_to_tab(nb_ants, " ");
+	for (int i = 0; ants[0][i] != '\0'; i++) {
+		if (ants[0][i] < '0' || ants[0][i] > '9')
 			return (false);
+	} if (atoi(ants[0]) <= 0)
+		return (false);
 	return (true);
 }
