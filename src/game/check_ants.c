@@ -18,5 +18,8 @@ bool check_ants(char *nb_ants)
 			return (false);
 	} if (atoi(ants[0]) <= 0)
 		return (false);
+	for (int i = 0; ants[i] != NULL; i++)
+		free(ants[i]);
+	free(ants);
 	return (true);
 }

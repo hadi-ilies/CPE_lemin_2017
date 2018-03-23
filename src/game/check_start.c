@@ -12,7 +12,6 @@
 bool there_is_links(char **file)
 {
 	char **link = NULL;
-	bool count_link = 0;
 
 	for (int i = 0; file[i] != NULL; i++) {
 		link = str_to_tab(file[i], " \t");
