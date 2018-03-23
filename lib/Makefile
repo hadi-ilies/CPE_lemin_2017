@@ -9,6 +9,7 @@ NAME	=	libmy.a
 
 SRC	=	my_strlen.c \
 		my_printf.c \
+		my_atoi.c \
 		my_fprintf.c \
 		my_strcmp.c \
 		my_strncmp.c \

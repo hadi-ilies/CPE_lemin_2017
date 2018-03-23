@@ -16,7 +16,7 @@ bool check_ants(char *nb_ants)
 	for (int i = 0; ants[0][i] != '\0'; i++) {
 		if (ants[0][i] < '0' || ants[0][i] > '9')
 			return (false);
-	} if (atoi(ants[0]) <= 0)
+	} if (my_atoi(ants[0]) <= 0)
 		return (false);
 	for (int i = 0; ants[i] != NULL; i++)
 		free(ants[i]);

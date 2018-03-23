@@ -29,8 +29,8 @@ bool take_rooms(game_t *game, char **file, int i)
 		if (check_x_y(room[1], room[2]) == false)
 			return (false);
 		game->room[game->nb_room].name = room[0];
-		game->room[game->nb_room].x = atoi(room[1]);
-		game->room[game->nb_room].y = atoi(room[2]);
+		game->room[game->nb_room].x = my_atoi(room[1]);
+		game->room[game->nb_room].y = my_atoi(room[2]);
 		if (my_strncmp(file[i - 1], START, my_strlen(START)) == 0)
 			game->start = &game->room[game->nb_room];
 		else if (my_strncmp(file[i - 1], END, my_strlen(END)) == 0)
@@ -46,7 +46,7 @@ bool take_rooms(game_t *game, char **file, int i)
 
 bool take_info(game_t *game, char **file)
 {
-	game->nb_ant = atoi(file[0]);
+	game->nb_ant = my_atoi(file[0]);
 	for (int i = 0; file[i] != NULL; i++)
 		if (take_rooms(game, file, i) == false)
 			return (false);
