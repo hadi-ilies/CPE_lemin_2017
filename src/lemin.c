@@ -64,11 +64,10 @@ path_t *get_shorter_path(game_t *game, room_t *room, path_t *path)
 
 void aff_path(path_t *path)
 {
-	my_printf("path :\n");
 	if (path == NULL)
 		return;
 	aff_path(path->next);
-	my_printf("- %s\n", path->room->name);
+	my_printf("[%s]\n", path->room->name);
 }
 
 void path_destroy(path_t *path)

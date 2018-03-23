@@ -5,9 +5,9 @@
 ** main
 */
 
-#include "stdbool.h"
-#include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
 #include "my.h"
 
 char *my_realloc(char *buf, size_t size)
@@ -33,15 +33,17 @@ char *get_line_main(int fd)
 	if (buf == NULL)
 		return (NULL);
 	for (size_t i = 0;; i++) {
-		if (read(fd, &buf[i], 1) < 1) {
+		ssize_t n = read(fd, &buf[i], 1);
+
+		if (n < 1 && i == 0) {
 			free(buf);
 			return (NULL);
 		}
-		buf[i + 1] = '\0';
-		buf = my_realloc(buf, i + 3);
+		buf[i + n] = '\0';
+		n == 1 ? buf = my_realloc(buf, i + 3) : 0;
 		if (buf == NULL)
 			return (NULL);
-		if (buf[i] == '\n') {
+		if (n < 1 || buf[i] == '\n') {
 			buf[i] = '\0';
 			return (buf);
 		}
