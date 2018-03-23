@@ -8,82 +8,84 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "game.h"
-#include "path.h"
-#include "my.h" //tmp
+#include "my.h"
+/*#include <SFML/Graphics.h> //tmp
 
-bool room_in_path(room_t *room, path_t *path)
+void aff(game_t *game)
 {
-	path_t *tmp = path;
+	sfVideoMode mode = {800, 800, 32};
+	sfRenderWindow *window;
+	sfEvent event;
+	sfRectangleShape *rect = sfRectangleShape_create();
+	sfVertex point = {.color = sfWhite};
+	sfVertexArray *line = sfVertexArray_create();
 
-	while (tmp != NULL) {
-		if (room == tmp->room)
-			return (true);
-		tmp = tmp->next;
+	sfVertexArray_setPrimitiveType(line, sfLinesStrip);
+	sfRectangleShape_setSize(rect, (sfVector2f){30, 30});
+	window = sfRenderWindow_create(mode, "Aff", sfClose, NULL);
+	sfRenderWindow_setFramerateLimit(window, 10);
+	while (sfRenderWindow_isOpen(window)) {
+		while (sfRenderWindow_pollEvent(window, &event)) {
+			if (event.type == sfEvtClosed)
+				sfRenderWindow_close(window);
+			if (event.type == sfEvtKeyPressed)
+				sfRenderWindow_close(window);
+		}
+		sfRenderWindow_clear(window, sfBlack);
+		for (size_t i = 0; i < game->nb_room; i++) {
+			sfRectangleShape_setPosition(rect, (sfVector2f){game->room[i].x * 20, game->room[i].y * 20});
+			sfRenderWindow_drawRectangleShape(window, rect, NULL);
+			for (size_t j = 0; j < game->room[i].nb_next; j++) {
+				point.position.x = game->room[i].x * 20 + 15;
+				point.position.y = game->room[i].y * 20 + 15;
+				sfVertexArray_append(line, point);
+				point.position.x = game->room[i].next[j]->x * 20 + 15;
+				point.position.y = game->room[i].next[j]->y * 20 + 15;
+				sfVertexArray_append(line, point);
+				sfRenderWindow_drawVertexArray(window, line, NULL);
+				sfVertexArray_clear(line);
+			}
+		}
+		sfRenderWindow_display(window);
 	}
-	return (false);
+	sfRectangleShape_destroy(rect);
+	sfVertexArray_destroy(line);
+	sfRenderWindow_destroy(window);
+	}*/
+
+void ee2(room_t *room, size_t nb)
+{
+	for (size_t i = 0; i < room->nb_next; i++)
+		if (room->next[i]->var == 0)
+			room->next[i]->var = nb + 1;
 }
 
-path_t *add_path(path_t *path, room_t *room)
+void ee(game_t *game, size_t nb)
 {
-	path_t *new_path = malloc(sizeof(path_t));
-
-	if (new_path == NULL)
-		return (NULL);
-	new_path->room = room;
-	new_path->next = path;
-	return (new_path);
+	for (size_t i = 0; i < game->nb_room; i++)
+		if (game->room[i].var == nb)
+			ee2(&game->room[i], nb);
 }
 
-path_t *remove_path(path_t *path)
+void ee3(room_t *room, size_t nb)
 {
-	path_t *new_path = NULL;
-
-	if (path == NULL)
-		return (NULL);
-	new_path = path->next;
-	free(path);
-	return (new_path);
-}
-
-path_t *get_shorter_path(game_t *game, room_t *room, path_t *path)
-{
-	path = add_path(path, room);
-	if (room == game->end)
-		return (path);
-	for (size_t i = 0; i < room->nb_next; i++) {
-		if (room_in_path(room->next[i], path))
-			continue;
-		my_printf("%s : %s\n", room->name, room->next[i]->name);
-		path = get_shorter_path(game, room->next[i], path);
-		if (path->room == game->end)
-			return (path);
-	}
-	path = remove_path(path);
-	return (path);
-}
-
-void aff_path(path_t *path)
-{
-	if (path == NULL)
-		return;
-	aff_path(path->next);
-	my_printf("[%s]\n", path->room->name);
-}
-
-void path_destroy(path_t *path)
-{
-	if (path == NULL)
-		return;
-	path_destroy(path->next);
-	free(path);
+	my_printf("P%d-%s", nb, room->name);
+	my_printf("\n");
+	for (size_t i = 0; i < room->nb_next; i++)
+		if (room->next[i]->var < room->var) {
+			ee3(room->next[i], nb);
+			break;
+		}
 }
 
 int lemin(game_t *game)
 {
-	path_t *path = NULL;
-
-	path = get_shorter_path(game, game->start, path);
-	aff_path(path);
-	path_destroy(path);
+	my_printf("#moves\n");
+	game->end->var = 1;
+	for (size_t i = 1; i < game->nb_room; i++)
+		ee(game, i);
+	for (size_t i = 0; i < game->nb_ant; i++)
+		ee3(game->start, i + 1);
+	//aff(game);
 	return (0);
 }

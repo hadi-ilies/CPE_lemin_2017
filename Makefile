@@ -35,7 +35,8 @@ CFLAGS	+=	-W -Wall -Wextra
 CFLAGS	+=	-fdiagnostics-color
 CFLAGS	+=	-g
 
-LDFLAGS	=	-L $(LIBDIR) -lmy
+LDFLAGS	+=	-L $(LIBDIR) -lmy
+#LDFLAGS	+=	-l c_graph_prog #tmp
 
 all	:	$(NAME)
 
