@@ -94,7 +94,6 @@ int lemin(game_t *game)
 	char **tab = NULL;
 
 	my_printf("#moves\n");
-	game->end->var = 1;
 	game_set_var(game);
 	tab = get_tab(game->start, tab);
 	for (size_t i = 0; tab[i] != NULL; i++)
