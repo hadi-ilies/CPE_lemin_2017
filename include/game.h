@@ -48,5 +48,6 @@ bool parsing(char **file);
 bool parsing2(game_t *game);
 void game_destroy(game_t *game);
 bool game_error(game_t *game);
+void game_set_var(game_t *game);
 
 #endif

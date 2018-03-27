@@ -53,39 +53,67 @@ void aff(game_t *game)
 	sfRenderWindow_destroy(window);
 	}*/
 
-void ee2(room_t *room, size_t nb)
-{
-	for (size_t i = 0; i < room->nb_next; i++)
-		if (room->next[i]->var == 0)
-			room->next[i]->var = nb + 1;
-}
 
-void ee(game_t *game, size_t nb)
+char **get_tab(room_t *room, char **tab)
 {
-	for (size_t i = 0; i < game->nb_room; i++)
-		if (game->room[i].var == nb)
-			ee2(&game->room[i], nb);
-}
-
-void ee3(room_t *room, size_t nb)
-{
-	my_printf("P%d-%s", nb, room->name);
-	my_printf("\n");
+	tab = add_line(tab, room->name);
 	for (size_t i = 0; i < room->nb_next; i++)
 		if (room->next[i]->var < room->var) {
-			ee3(room->next[i], nb);
+			tab = get_tab(room->next[i], tab);
 			break;
+		}
+	return (tab);
+}
+
+void ee3(game_t *game, char **tab)
+{
+	size_t len = 0;
+
+	for (; tab[len] != NULL; len++);
+	len--;
+	for (size_t i = 1; i < len; i++)
+		for (size_t j = 0; j < i; j++) {
+			my_printf("P%d-%s", j + 1, tab[i - j]);
+			my_printf("%s", j < i - 1 ? " " : "\n");
+		}
+	for (size_t i = 1; i <= game->nb_ant - len + 1; i++)
+		for (size_t j = 0; j < len; j++) {
+			my_printf("P%d-%s", i + j, tab[len - j]);
+			my_printf("%s", j < len - 1 ? " " : "\n");
+		}
+	for (size_t i = 1; i < len; i++)
+		for (size_t j = 0; j < len - i; j++) {
+			my_printf("P%d", j + game->nb_ant + i - 2);
+			my_printf("-%s", tab[len - j]);
+			my_printf("%s", j < len - i - 1 ? " " : "\n");
 		}
 }
 
 int lemin(game_t *game)
 {
+	char **tab = NULL;
+
 	my_printf("#moves\n");
 	game->end->var = 1;
-	for (size_t i = 1; i < game->nb_room; i++)
-		ee(game, i);
-	for (size_t i = 0; i < game->nb_ant; i++)
-		ee3(game->start, i + 1);
-	//aff(game);
+	game_set_var(game);
+	tab = get_tab(game->start, tab);
+	for (size_t i = 0; tab[i] != NULL; i++)
+		my_printf("path : %s\n", tab[i]);
+	ee3(game, tab);
+	free(tab);
 	return (0);
 }
+
+/*
+  P1-3
+  P1-4 P2-3
+  P1-0 P2-4 P3-3
+  P2-0 P3-4 P4-3
+  P3-0 P4-4 P5-3
+  P4-0 P5-4 P6-3
+  P5-0 P6-4 P7-3
+  P6-0 P7-4 P8-3
+  P7-0 P8-4 P9-3
+  P8-0 P9-4
+  P9-0
+ */

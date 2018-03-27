@@ -25,6 +25,7 @@ SRC	=	$(SRCDIR)main.c \
 		$(GAMEDIR)game_create_parsing.c \
 		$(GAMEDIR)game_destroy.c \
 		$(GAMEDIR)game_error.c \
+		$(GAMEDIR)game_set_var.c \
 		$(ROOMDIR)room_destroy.c \
 		$(ROOMDIR)room_error.c \
 
