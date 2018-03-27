@@ -8,12 +8,18 @@
 #include <unistd.h>
 #include "game.h"
 
-static bool pme(char *error_msg)
+/*static bool pme(char *error_msg)
 {
 	size_t size = 0;
 
 	for (; error_msg[size] != '\0'; size++);
 	//write(STDERR_FILENO, error_msg, size);
+	return (true);
+	}*/
+
+static bool pme(char *error_msg)
+{
+	(void)error_msg;
 	return (true);
 }
 

@@ -21,11 +21,12 @@ void game_set_var2(game_t *game, size_t nb)
 			game_set_var3(&game->room[i], nb);
 }
 
-void game_set_var(game_t *game)
+bool game_set_var(game_t *game)
 {
 	for (size_t i = 1; i < game->nb_room; i++)
 		game->room[i].var = 0;
 	game->end->var = 1;
 	for (size_t i = 1; i < game->nb_room; i++)
 		game_set_var2(game, i);
+	return (game->start->var ? true : false);
 }
