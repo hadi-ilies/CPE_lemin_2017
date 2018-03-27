@@ -4,6 +4,7 @@
 ** File description:
 ** check_ant
 */
+
 #include <stdbool.h>
 #include "game.h"
 #include "my.h"

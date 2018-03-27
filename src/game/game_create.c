@@ -36,19 +36,18 @@ game_t game_create(void)
 	char **file = save_file();
 
 	if (file == NULL)
-		return (GAME_ERROR);//game_error
+		return (GAME_ERROR);
 	if ((game.room = malloc(sizeof(room_t) * count_rooms(file))) == NULL)
-		return (GAME_ERROR);//game_error
+		return (GAME_ERROR);
 	if (parsing(file) == false || take_info(&game, file) == false)
-		return (GAME_ERROR);//game_error
+		return (GAME_ERROR);
 	if (parsing2(&game) == false)
-		return (GAME_ERROR);//game_error
+		return (GAME_ERROR);
 	if (parsing3(&game, file) == false)
-		return (GAME_ERROR);//game_error
+		return (GAME_ERROR);
 	init_next(&game);
 	make_link(&game, file);
-	game_set_var(&game);
-	if (game.start->var == 0)
+	if (game_set_var(&game) == false)
 		return (GAME_ERROR);
 	display_file(file);
 	free_file(file);
