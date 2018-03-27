@@ -47,6 +47,9 @@ game_t game_create(void)
 		return (GAME_ERROR);//game_error
 	init_next(&game);
 	make_link(&game, file);
+	game_set_var(&game);
+	if (game.start->var == 0)
+		return (GAME_ERROR);
 	display_file(file);
 	free_file(file);
 	return (game);
