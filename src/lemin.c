@@ -65,7 +65,7 @@ char **get_tab(room_t *room, char **tab)
 	return (tab);
 }
 
-void ee3(game_t *game, char **tab)
+void print_path(game_t *game, char **tab)
 {
 	size_t len = 0;
 
@@ -96,23 +96,7 @@ int lemin(game_t *game)
 	my_printf("#moves\n");
 	game_set_var(game);
 	tab = get_tab(game->start, tab);
-	for (size_t i = 0; tab[i] != NULL; i++)
-		my_printf("path : %s\n", tab[i]);
-	ee3(game, tab);
+	print_path(game, tab);
 	free(tab);
 	return (0);
 }
-
-/*
-  P1-3
-  P1-4 P2-3
-  P1-0 P2-4 P3-3
-  P2-0 P3-4 P4-3
-  P3-0 P4-4 P5-3
-  P4-0 P5-4 P6-3
-  P5-0 P6-4 P7-3
-  P6-0 P7-4 P8-3
-  P7-0 P8-4 P9-3
-  P8-0 P9-4
-  P9-0
- */
