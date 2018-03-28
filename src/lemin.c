@@ -10,49 +10,52 @@
 #include "game.h"
 #include "my.h"
 
-char **get_tab(room_t *room, char **tab)
+void move_ant2(game_t *game, room_t **ant, size_t num, bool *tmp)
 {
-	tab = add_line(tab, room->name);
-	for (size_t i = 0; i < room->nb_next; i++)
-		if (room->next[i]->var < room->var) {
-			tab = get_tab(room->next[i], tab);
+	size_t nb = ant[num]->nb_ant - 1;
+
+	for (size_t i = 0; i < ant[num]->nb_next; i++) {
+		bool cond1 = false;
+		bool cond2 = ant[num]->next[i]->nb_ant == 0;
+
+		cond1 = ant[num]->next[i]->var < ant[num]->var + nb;
+		if ((cond1 && cond2) || ant[num]->next[i] == game->end) {
+			ant[num]->nb_ant--;
+			ant[num]->next[i]->nb_ant++;
+			*tmp ? my_printf(" ") : 0;
+			my_printf("P%d-%s", num, ant[num]->next[i]->name);
+			ant[num] = ant[num]->next[i];
+			*tmp = true;
 			break;
 		}
-	return (tab);
+	}
 }
 
-void print_path(game_t *game, char **tab)
+void move_ant(game_t *game, room_t **ant)
 {
-	size_t len = 0;
+	bool tmp = true;
 
-	for (; tab[len] != NULL; len++);
-	len--;
-	for (size_t i = 1; i < len; i++)
-		for (size_t j = 0; j < i; j++) {
-			my_printf("P%d-%s", j + 1, tab[i - j]);
-			my_printf("%s", j < i - 1 ? " " : "\n");
-		}
-	for (size_t i = 1; i <= game->nb_ant - len + 1; i++)
-		for (size_t j = 0; j < len; j++) {
-			my_printf("P%d-%s", i + j, tab[len - j]);
-			my_printf("%s", j < len - 1 ? " " : "\n");
-		}
-	for (size_t i = 1; i < len; i++)
-		for (size_t j = 0; j < len - i; j++) {
-			my_printf("P%d", j + game->nb_ant + i - 2);
-			my_printf("-%s", tab[len - j]);
-			my_printf("%s", j < len - i - 1 ? " " : "\n");
-		}
+	while (tmp) {
+		tmp = false;
+		for (size_t i = 0; i < game->nb_ant; i++)
+			ant[i] != game->end ? move_ant2(game, ant, i, &tmp) : 0;
+		tmp ? my_printf("\n") : 0;
+	}
 }
 
 int lemin(game_t *game)
 {
-	char **tab = NULL;
+	room_t **ant = malloc(sizeof(room_t *) * game->nb_ant);
 
+	if (ant == NULL)
+		return (84);
+	for (size_t i = 0; i < game->nb_ant; i++)
+		ant[i] = game->start;
+	for (size_t i = 0; i < game->nb_room; i++)
+		game->room[i].nb_ant = 0;
+	game->start->nb_ant = game->nb_ant;
 	my_printf("#moves\n");
-	game_set_var(game);
-	tab = get_tab(game->start, tab);
-	print_path(game, tab);
-	free(tab);
+	move_ant(game, ant);
+	free(ant);
 	return (0);
 }
