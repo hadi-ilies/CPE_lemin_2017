@@ -23,7 +23,7 @@ void move_ant2(game_t *game, room_t **ant, size_t num, bool *tmp)
 			ant[num]->nb_ant--;
 			ant[num]->next[i]->nb_ant++;
 			*tmp ? my_printf(" ") : 0;
-			my_printf("P%d-%s", num, ant[num]->next[i]->name);
+			my_printf("P%d-%s", num + 1, ant[num]->next[i]->name);
 			ant[num] = ant[num]->next[i];
 			*tmp = true;
 			break;
