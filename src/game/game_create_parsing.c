@@ -76,10 +76,10 @@ bool check_room_exist(game_t *game, char **link)
 
 	for (size_t i = 0; i < game->nb_room; i++) {
 		if (my_strncmp(link[0], game->room[i].name,
-			my_strlen(game->room[i].name)) == 0)
+			my_strlen(link[0])) == 0)
 			exist1 = 1;
 		if (my_strncmp(link[1], game->room[i].name,
-			my_strlen(game->room[i].name)) == 0)
+				my_strlen(link[1])) == 0)
 			exist2 = 1;
 	} if (exist1 == 0 || exist2 == 0)
 		return (false);
