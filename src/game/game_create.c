@@ -41,7 +41,7 @@ game_t game_create(void)
 		return (GAME_ERROR);
 	if (parsing(file) == false || take_info(&game, file) == false)
 		return (GAME_ERROR);
-	if (parsing2(&game) == false)
+	if (parsing2(&game, file) == false)
 		return (GAME_ERROR);
 	if (parsing3(&game, file) == false)
 		return (GAME_ERROR);
