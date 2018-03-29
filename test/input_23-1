@@ -1,0 +1,13 @@
+3
+##end
+  #bedroom
+1 13 0
+##start
+	 #room
+0 1 0
+2 5 0
+# The next room is the kitchen
+3 9 0
+0-2
+2-3
+3-1
