@@ -7,6 +7,8 @@
 
 # ======================== ERROR ============================
 
+echo -e "\n\n\n//////////////////// ERROR TESTS (14 test) ////////////////////\n\n\n"
+
 # test 1 error : no arguments
 
 echo "======== test 1 error : no arguments ========"
@@ -55,7 +57,7 @@ fi
 # test 4 error : 0 ant in the game
 
 echo "======== test 4 error : 0 ant in the game ========"
-./lem_in < input_7-0
+./lem_in < input_7-0 > tmp
 echo $? > test_4
 diff test_4 error
 error=$?
@@ -100,7 +102,7 @@ fi
 # test 7 error : bad parameter in the file
 
 echo "======== test 6 error : useless file ========"
-./lem_in < input_13-0
+./lem_in < input_13-0 > tmp
 echo $? > test_7
 diff test_7 error
 error=$?
@@ -109,13 +111,13 @@ then
     echo -e "The prgram return 84 ===== [OK]\n"
 elif [ $error -eq 1 ]
 then
-    echo -e "test_7 fail ===== [KO]\n"
+    echo -e "test_6 fail ===== [KO]\n"
 fi
 
 # test 8 error : multiples ends
 
 echo "======== test 8 error : useless file ========"
-./lem_in < input_15-0
+./lem_in < input_15-0 > tmp
 echo $? > test_8
 diff test_8 error
 error=$?
@@ -174,7 +176,7 @@ fi
 
 # test 12 error : unexistant room
 echo "======== test 12 error : unexistant room ========"
-./lem_in < input_19-0
+./lem_in < input_19-0 > tmp
 echo $? > test_12
 diff test_12 error
 error=$?
@@ -205,7 +207,7 @@ fi
 
 # ======================== FONCTIONAL ============================
 
-
+echo -e "\n\n\n//////////////////// FONCTIONAL TESTS (10 tests) ////////////////////\n\n\n"
 
 #test 15 fonctional : file with useless spaced commentaries
 

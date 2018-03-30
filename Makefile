@@ -34,7 +34,7 @@ OBJ	=	$(SRC:.c=.o)
 CFLAGS	+=	-I./include
 CFLAGS	+=	-W -Wall -Wextra
 CFLAGS	+=	-fdiagnostics-color
-CFLAGS	+=	-g
+#CFLAGS	+=	-g
 
 LDFLAGS	+=	-L $(LIBDIR) -lmy
 #LDFLAGS	+=	-l c_graph_prog #tmp
@@ -44,6 +44,7 @@ all	:	$(NAME)
 $(NAME)	:	$(OBJ)
 		make re -C $(LIBDIR) --no-print-directory
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+		cp $(NAME) test/
 
 clean	:
 		rm -f $(OBJ)
