@@ -75,7 +75,7 @@ bool check_start(char **file)
 			for (int j = 0; check_start[j] != NULL; j++)
 				free(check_start[j]);
 			free(check_start);
-			check_start_end_error_display(file);
+			tmp == false ? check_start_end_error_display(file) : 0;
 			return (tmp);
 		}
 	}
@@ -97,7 +97,7 @@ bool check_end(char **file)
 			for (int j = 0; check_end[j] != NULL; j++)
 				free(check_end[j]);
 			free(check_end);
-			check_start_end_error_display(file);
+			tmp == false ? check_start_end_error_display(file) : 0;
 			return (tmp);
 		}
 	}
