@@ -46,6 +46,6 @@ void make_link(game_t *game, char **file);
 bool parsing(char **file);
 void game_destroy(game_t *game);
 bool game_error(game_t *game);
-bool game_set_var(game_t *game);
+bool game_set_var(game_t *game, char **file);
 
 #endif
