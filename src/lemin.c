@@ -43,10 +43,22 @@ void move_ant(game_t *game, room_t **ant)
 	}
 }
 
+void start_end(game_t *game)
+{
+	my_printf("#moves\n");
+	for (size_t i = 0; i < game->nb_ant; i++)
+		my_printf("P%d-%s\n", i + 1, game->end->name);
+}
+
 int lemin(game_t *game)
 {
-	room_t **ant = malloc(sizeof(room_t *) * game->nb_ant);
+	room_t **ant;
 
+	if (game->start->var == 2) {
+		start_end(game);
+		return (0);
+	}
+	ant = malloc(sizeof(room_t *) * game->nb_ant);
 	if (ant == NULL)
 		return (84);
 	for (size_t i = 0; i < game->nb_ant; i++)
