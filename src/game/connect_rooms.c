@@ -52,8 +52,7 @@ void make_link(game_t *game, char **file)
 			for (int j = 0; link[j] != NULL; j++)
 				free(link[j]);
 			free(link);
-		}
-		for (int j = 0; line[j] != NULL; j++)
+		} for (int j = 0; line[j] != NULL; j++)
 			free(line[j]);
 		free(line);
 	}

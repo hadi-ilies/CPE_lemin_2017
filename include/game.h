@@ -23,6 +23,8 @@ typedef struct {
 	room_t *room;
 } game_t;
 
+void display_error_more_start_end(char **file, int j);
+void display_error_link(char **file, int j);
 bool check_end(char **file);
 bool check_start(char **file);
 void display_file(char **file);

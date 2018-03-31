@@ -18,6 +18,7 @@ SRC	=	$(SRCDIR)main.c \
 		$(SRCDIR)lemin.c \
 		$(GAMEDIR)connect_rooms.c \
 		$(GAMEDIR)check_ants.c \
+		$(GAMEDIR)display_error.c \
 		$(GAMEDIR)take_info.c \
 		$(GAMEDIR)save_file.c \
 		$(GAMEDIR)check_start.c \

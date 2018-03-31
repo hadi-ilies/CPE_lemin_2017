@@ -9,15 +9,6 @@
 #include "game.h"
 #include "my.h"
 
-void display_error_more_start_end(char **file, int j)
-{
-	my_printf("#number_of_ants\n");
-	my_printf("%s\n", file[0]);
-	my_printf("#rooms\n");
-	for (int i = 1; i != j; i++)
-		my_printf("%s\n", file[i]);
-}
-
 bool parsing(char **file)
 {
 	int start = 0;
@@ -51,44 +42,14 @@ bool check_name_and_coord(game_t *game, size_t j)
 	return (true);
 }
 
-void display_error_same_room_or_coor(char **file, int j)
-{
-	my_printf("#number_of_ants\n");
-	my_printf("%s\n", file[0]);
-	my_printf("#rooms\n");
-	for (int i = 1; i <= j + 3; i++)
-		my_printf("%s\n", file[i]);
-}
-
 bool parsing2(game_t *game, char **file)
 {
 	for (size_t j = 0; j < game->nb_room; j++)
 		if (check_name_and_coord(game, j) == false) {
-			display_error_same_room_or_coor(file, j);
+			display_error_more_start_end(file, j + 3);
 			return (false);
 		}
 	return (true);
-}
-
-void display_error_link(char **file, int j)
-{
-	char **tmp = NULL;
-	bool bol = 1;
-
-	my_printf("#number_of_ants\n");
-	my_printf("%s\n", file[0]);
-	my_printf("#rooms\n");
-	for (int i = 1; i != j; i++) {
-		tmp = str_to_tab(file[i], " \t");
-		if (tmp[0] != NULL && tmp[1] == NULL
-		&& count_bar(tmp[0]) == true && bol == 1) {
-			my_printf("#tunnels\n");
-			bol = 0;
-		} for (int j = 0; tmp[j] != NULL; j++)
-			free(tmp[j]);
-		free(tmp);
-		my_printf("%s\n", file[i]);
-	}
 }
 
 bool parsing3(game_t *game, char **file)
