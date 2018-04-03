@@ -53,6 +53,7 @@ clean	:
 
 fclean	:	clean
 		rm -f $(NAME)
+		rm -f test/$(NAME)
 		make fclean -C $(LIBDIR) --no-print-directory
 
 re	:	fclean all

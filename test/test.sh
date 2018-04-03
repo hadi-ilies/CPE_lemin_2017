@@ -27,7 +27,7 @@ fi
 # test 2 error : not enought arguments on start
 
 echo "======== test 2 error : not enought arguments on start ========"
-./lem_in < input_5-0
+./lem_in < input_5-0 > tmp
 echo $? > test_2
 diff test_2 error
 error=$?
@@ -42,7 +42,7 @@ fi
 # test 3 error : no start arguments
 
 echo "======== test 3 error : no arguments on start ========"
-./lem_in < input_6-0
+./lem_in < input_6-0 > tmp
 echo $? > test_3
 diff test_3 error
 error=$?
@@ -72,7 +72,7 @@ fi
 # test 5 error : bad parameters in the file
 
 echo "======== test 5 error : bad parameters in the file ========"
-./lem_in < input_10-0
+./lem_in < input_10-0 > tmp
 echo $? > test_5
 diff test_5 error
 error=$?
@@ -132,7 +132,7 @@ fi
 # test 9 error : not enought way to end
 
 echo "======== test 9 error : not enought way to end ========"
-./lem_in < input_16-0
+./lem_in < input_16-0 > tmp
 echo $? > test_9
 diff test_9 error
 error=$?
@@ -147,7 +147,7 @@ fi
 # test 10 error : not linked
 
 echo "======== test 10 error : not linked ========"
-./lem_in < input_17-0
+./lem_in < input_17-0 > tmp
 echo $? > test_10
 diff test_10 error
 error=$?
@@ -162,7 +162,7 @@ fi
 # test 11 error : no end way
 
 echo "======== test 11 error : no end way ========"
-./lem_in < input_18-0
+./lem_in < input_18-0 > tmp
 echo $? > test_11
 diff test_11 error
 error=$?
@@ -191,7 +191,7 @@ fi
 # test 14 error : wrong coord for end way
 
 echo "======== test 14 error : wrong coord for end way ========"
-./lem_in < input_22-0
+./lem_in < input_22-0 > tmp
 echo $? > test_14
 diff test_14 error
 error=$?
