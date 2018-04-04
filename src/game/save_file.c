@@ -38,7 +38,7 @@ char **save_file(void)
 
 	do {
 		str = get_next_line(0);
-		if (str == NULL || check_urandom(str) == false)
+		if (str == NULL || *str == '\0' || check_urandom(str) == false)
 			return (file);
 		if ((str[0] == '#' && str[1] != '#') || (
 		my_strncmp(str, "##", 2) == 0

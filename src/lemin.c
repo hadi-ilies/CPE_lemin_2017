@@ -45,7 +45,7 @@ void move_ant(game_t *game, room_t **ant)
 
 void start_end(game_t *game)
 {
-	//my_printf("#moves\n");
+	my_printf("#moves\n");
 	for (size_t i = 0; i < game->nb_ant; i++)
 		my_printf("P%d-%s\n", i + 1, game->end->name);
 }

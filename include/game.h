@@ -14,6 +14,8 @@
 #define START "##start"
 #define END "##end"
 #define GAME_ERROR (game_t){.nb_ant = 0}
+#define ROOM_EXIST_DOUBLE my_strcmp(link[0], link[1]) == 0 || \
+		check_room_exist(game, link) == false
 
 typedef struct {
 	size_t nb_ant;
@@ -23,6 +25,7 @@ typedef struct {
 	room_t *room;
 } game_t;
 
+int count_adds(char **file, int j, game_t *game);
 void display_error_more_start_end(char **file, int j);
 void display_error_link(char **file, int j);
 bool check_end(char **file);
@@ -39,7 +42,7 @@ bool count_bar(char *link);
 bool parsing3(game_t *game, char **file);
 bool parsing2(game_t *game, char **file);
 bool parsing(char **file);
-bool check_name_and_coord(game_t *game, size_t j);
+bool check_name_and_coord(game_t *game, size_t *j);
 bool check_room_exist(game_t *game, char **link);
 game_t game_create(void);
 int find_room(game_t *game, char *room);

@@ -47,10 +47,8 @@ game_t game_create(void)
 		return (GAME_ERROR);
 	init_next(&game);
 	make_link(&game, file);
-	if (game_set_var(&game, file) == false) {
-		my_printf("#moves\n");
+	if (game_set_var(&game, file) == false)
 		return (GAME_ERROR);
-	}
 	display_file(file);
 	free_file(file);
 	return (game);

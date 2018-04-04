@@ -8,6 +8,20 @@
 #include "game.h"
 #include "my.h"
 
+int count_adds(char **file, int j, game_t *game)
+{
+	int k = 0;
+	char **array;
+
+	for (int i = 0; file[i] != NULL; i++) {
+		array = str_to_tab(file[i], " \t");
+		if (my_strcmp(array[0], game->room[j].name) == 0)
+			break;
+		k++;
+	}
+	return (k + 1);
+}
+
 void display_error_more_start_end(char **file, int j)
 {
 	my_printf("#number_of_ants\n");
