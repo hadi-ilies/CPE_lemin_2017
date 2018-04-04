@@ -17,7 +17,7 @@ char *supr_comment(char *str)
 		if (str[i] == '#' && str[i + 1] == '#')
 			i++;
 		else if (str[i] == '#' && str[i + 1] != '#') {
-			str[i] = '\0';
+			str[i - 1] = '\0';
 			return (str);
 		}
 	return (str);
