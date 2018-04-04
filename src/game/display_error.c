@@ -10,16 +10,21 @@
 
 int count_adds(char **file, int j, game_t *game)
 {
-	int k = 0;
+	int k = 1;
+	int x = 0;
 	char **array;
 
-	for (int i = 0; file[i] != NULL; i++) {
+	for (int i = 1; file[i] != NULL; i++) {
 		array = str_to_tab(file[i], " \t");
-		k++;
-		if (my_strcmp(array[0], game->room[j].name) == 0)
+		if ((my_strcmp(array[0], game->room[j].name) == 0 && x > j)
+		|| (game->room[j].x == game->room[x].x
+			&& game->room[j].y == game->room[x].y && x > j))
 			break;
+		array[0] != NULL && array[1] != NULL
+			&& array[2] != NULL ? x++ : 0;
+		k++;
 	}
-	return (k + 1);
+	return (k);
 }
 
 void display_error_more_start_end(char **file, int j)

@@ -30,13 +30,13 @@ bool parsing(char **file)
 	} return (true);
 }
 
-bool check_name_and_coord(game_t *game, size_t *j)
+bool check_name_and_coord(game_t *game, size_t j)
 {
 	for (size_t i = 0; i < game->nb_room; i++) {
-		if (i != *j) {
-			if ((my_strcmp(game->room[*j].name, game->room[i].name) == 0)
-			|| (game->room[*j].x == game->room[i].x
-			&& game->room[*j].y == game->room[i].y)) {
+		if (i != j) {
+			if ((my_strcmp(game->room[j].name, game->room[i].name) == 0)
+			|| (game->room[j].x == game->room[i].x
+			&& game->room[j].y == game->room[i].y && i != j)) {
 				return (false);
 			}
 		}
@@ -47,7 +47,7 @@ bool check_name_and_coord(game_t *game, size_t *j)
 bool parsing2(game_t *game, char **file)
 {
 	for (size_t j = 0; j < game->nb_room; j++)
-		if (check_name_and_coord(game, &j) == false) {
+		if (check_name_and_coord(game, j) == false) {
 			display_error_more_start_end(file,
 						count_adds(file, j, game));
 			return (false);

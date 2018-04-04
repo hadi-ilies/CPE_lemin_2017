@@ -42,7 +42,7 @@ bool count_bar(char *link);
 bool parsing3(game_t *game, char **file);
 bool parsing2(game_t *game, char **file);
 bool parsing(char **file);
-bool check_name_and_coord(game_t *game, size_t *j);
+bool check_name_and_coord(game_t *game, size_t j);
 bool check_room_exist(game_t *game, char **link);
 game_t game_create(void);
 int find_room(game_t *game, char *room);
