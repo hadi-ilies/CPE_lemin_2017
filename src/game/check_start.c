@@ -53,7 +53,7 @@ void check_start_end_error_display(char **file)
 		&& count_bar(tmp[0]) == true && bol == 1) {
 			return;
 		} for (int j = 0; tmp[j] != NULL; j++)
-			  free(tmp[j]);
+			free(tmp[j]);
 		free(tmp);
 		my_printf("%s\n", file[i]);
 	}

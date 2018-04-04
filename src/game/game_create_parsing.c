@@ -69,10 +69,10 @@ bool parsing3(game_t *game, char **file)
 				display_error_link(file, i);
 				return (false);
 			} for (int j = 0; link[j] != NULL; j++)
-				  free(link[j]);
+				free(link[j]);
 			free(link);
 		} for (int j = 0; line[j] != NULL; j++)
-			  free(line[j]);
+			free(line[j]);
 		free(line);
 	}
 	return (true);
