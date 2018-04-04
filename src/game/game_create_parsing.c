@@ -29,6 +29,7 @@ bool parsing(char **file)
 		return (false);
 	} return (true);
 }
+
 bool check_name_and_coord(game_t *game, size_t *j)
 {
 	for (size_t i = 0; i < game->nb_room; i++) {

@@ -39,7 +39,7 @@ void display_error_link(char **file, int j)
 	my_printf("#number_of_ants\n");
 	my_printf("%s\n", file[0]);
 	my_printf("#rooms\n");
-	for (int i = 1; i != j; i++) {
+	for (int i = 1; i != j + 1; i++) {
 		tmp = str_to_tab(file[i], " \t");
 		if (tmp[0] != NULL && tmp[1] == NULL
 		&& count_bar(tmp[0]) == true && bol == 1) {
