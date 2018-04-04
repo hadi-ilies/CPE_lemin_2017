@@ -15,9 +15,9 @@ int count_adds(char **file, int j, game_t *game)
 
 	for (int i = 0; file[i] != NULL; i++) {
 		array = str_to_tab(file[i], " \t");
+		k++;
 		if (my_strcmp(array[0], game->room[j].name) == 0)
 			break;
-		k++;
 	}
 	return (k + 1);
 }

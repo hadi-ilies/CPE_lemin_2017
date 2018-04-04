@@ -16,7 +16,7 @@ void display_error_links(char **file)
 	my_printf("#rooms\n");
 	for (int i = 1; file[i] != NULL; i++)
 		my_printf("%s\n", file[i]);
-	my_printf("#tunnels\n");
+	//my_printf("#tunnels\n");
 }
 
 bool there_is_links(char **file)

@@ -37,8 +37,7 @@ bool check_name_and_coord(game_t *game, size_t *j)
 			if ((my_strcmp(game->room[*j].name, game->room[i].name) == 0)
 			|| (game->room[*j].x == game->room[i].x
 			&& game->room[*j].y == game->room[i].y)) {
-				*j = i;
-			return (false);
+				return (false);
 			}
 		}
 	}
