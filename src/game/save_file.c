@@ -37,16 +37,20 @@ char **save_file(void)
 	char **file = NULL;
 
 	do {
+		bool cond = true;
+
 		str = get_next_line(0);
 		if (str == NULL || *str == '\0' || check_urandom(str) == false)
 			return (file);
 		if ((str[0] == '#' && str[1] != '#') || (
 		my_strncmp(str, "##", 2) == 0
 		&& my_strncmp(str + 2, "start", 5) != 0
-		&& my_strncmp(str + 2, "end", 3) != 0))
-		str = get_next_line(0);
+		&& my_strncmp(str + 2, "end", 3) != 0)) {
+			str = get_next_line(0);
+			cond = false;
+		}
 		str = supr_comment(str);
-		file = add_line(file, str);
+		cond == true ? file = add_line(file, str) : 0;
 	} while (str != NULL);
 	return (file);
 }
